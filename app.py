@@ -1,3 +1,4 @@
+'''
 from flask import Flask, render_template, request
 import torch
 from transformers import AutoModelForSpeechSeq2Seq, AutoProcessor, pipeline
@@ -57,3 +58,4 @@ def transcribe():
 
     except Exception as e:
         return render_template('error.html', error=str(e))
+'''
