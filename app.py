@@ -13,9 +13,7 @@ model_id = "openai/whisper-large-v3"
 print(f'model id {model_id}')
 
 try:
-    model = AutoModelForSpeechSeq2Seq.from_pretrained(
-        model_id, torch_dtype=torch_dtype, low_cpu_mem_usage=True, use_safetensors=True
-    )
+    model = AutoModelForSpeechSeq2Seq.from_pretrained(model_id)
     model.to(device)
 except Exception as e:
     print(f"error with automodel : {e}")
@@ -63,4 +61,4 @@ def transcribe():
 
 if __name__ == '__main__':
     print('inside name')
-    app.run(host='0.0.0.0')
+    app.run(host='0.0.0.0',port=3000, debug=False)
