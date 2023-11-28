@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request
 import torch
 from transformers import AutoModelForSpeechSeq2Seq, AutoProcessor, pipeline
+import os
 
 app = Flask(__name__)
 
@@ -58,4 +59,5 @@ def transcribe():
         return render_template('error.html', error=str(e))
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0',port=3000, debug=False)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
