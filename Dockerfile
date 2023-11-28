@@ -1,11 +1,19 @@
 FROM python:3.9
 
-WORKDIR /code
+# Set the working directory to /app
+WORKDIR /app
 
-COPY ./requirements.txt /code/requirements.txt
+# Copy the current directory contents into the container at /app
+COPY . /app
 
-RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
+# Install any needed packages specified in requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
-COPY . .
+# Set FLASK_APP environment variable
+ENV FLASK_APP=app.py
 
-CMD ["gunicorn", "-b", "0.0.0.0:7860", "main:app"]
+# Expose the port on which Flask will run
+EXPOSE 5000
+
+# Run the Flask app
+CMD ["flask", "run", "--host=0.0.0.0"]
