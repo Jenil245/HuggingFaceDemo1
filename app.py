@@ -5,30 +5,38 @@ from transformers import AutoModelForSpeechSeq2Seq, AutoProcessor, pipeline
 app = Flask(__name__)
 
 # Load the ASR model from Hugging Face
-device = "cuda:0" if torch.cuda.is_available() else "cpu"
-torch_dtype = torch.float16 if torch.cuda.is_available() else torch.float32
+device = "cpu"
+torch_dtype = torch.float32
 
 model_id = "openai/whisper-large-v3"
 
-model = AutoModelForSpeechSeq2Seq.from_pretrained(
-    model_id, torch_dtype=torch_dtype, low_cpu_mem_usage=True, use_safetensors=True
-)
-model.to(device)
+print(f'model id {model_id}')
 
-processor = AutoProcessor.from_pretrained(model_id)
+try:
+    model = AutoModelForSpeechSeq2Seq.from_pretrained(
+        model_id, torch_dtype=torch_dtype, low_cpu_mem_usage=True, use_safetensors=True
+    )
+    model.to(device)
+except Exception as e:
+    print(f"error with automodel : {e}")
 
-pipe = pipeline(
-    "automatic-speech-recognition",
-    model=model,
-    tokenizer=processor.tokenizer,
-    feature_extractor=processor.feature_extractor,
-    max_new_tokens=128,
-    chunk_length_s=30,
-    batch_size=16,
-    return_timestamps=True,
-    torch_dtype=torch_dtype,
-    device=device,
-)
+try:
+    processor = AutoProcessor.from_pretrained(model_id)
+
+    pipe = pipeline(
+        "automatic-speech-recognition",
+        model=model,
+        tokenizer=processor.tokenizer,
+        feature_extractor=processor.feature_extractor,
+        max_new_tokens=128,
+        chunk_length_s=30,
+        batch_size=16,
+        return_timestamps=True,
+        torch_dtype=torch_dtype,
+        device=device,
+    )
+except Exception as e:
+    print(f"error with pipeline : {e}")
 
 @app.route('/')
 def index():
@@ -54,4 +62,5 @@ def transcribe():
         return render_template('error.html', error=str(e))
 
 if __name__ == '__main__':
-    app.run()
+    print('inside name')
+    app.run(host='0.0.0.0')
