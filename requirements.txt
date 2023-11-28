@@ -1,5 +1,5 @@
-#transformers
+transformers
 flask
-#accelerate
-#torch
+accelerate
+torch
 gunicorn
