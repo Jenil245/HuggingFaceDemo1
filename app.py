@@ -10,8 +10,6 @@ torch_dtype = torch.float32
 
 model_id = "openai/whisper-large-v3"
 
-print(f'model id {model_id}')
-
 try:
     model = AutoModelForSpeechSeq2Seq.from_pretrained(model_id)
     model.to(device)
@@ -60,5 +58,4 @@ def transcribe():
         return render_template('error.html', error=str(e))
 
 if __name__ == '__main__':
-    print('inside name')
     app.run(host='0.0.0.0',port=3000, debug=False)
