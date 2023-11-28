@@ -2,3 +2,4 @@ transformers
 flask
 accelerate
 torch
+gunicorn
