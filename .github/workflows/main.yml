@@ -16,8 +16,8 @@ jobs:
       - name: Add remote 
         env:
           HuggingFaceKey: ${{ secrets.HuggingFaceKey }}
-        run: git remote add space https://jenil245:$HuggingFaceKey@huggingface.co/spaces/jenil245/demotest
+        run: git remote add space https://jenil245:$HuggingFaceKey@huggingface.co/spaces/jenil245/ASRdemo1
       - name: Push to hub
         env:
           HuggingFaceKey: ${{ secrets.HuggingFaceKey }}
-        run: git push --force https://jenil245:$HuggingFaceKey@huggingface.co/spaces/jenil245/demotest main
+        run: git push --force https://jenil245:$HuggingFaceKey@huggingface.co/spaces/jenil245/ASRdemo1 main
